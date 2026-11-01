@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WNC Strategic LLC</title>
-    <!-- Add your favicon link here -->
+    <!-- Favicon link -->
     <link rel="icon" type="image/png" href="image.png">
     <style>
         /* Reset & Base Layout */
@@ -43,8 +43,8 @@
             height: 100vh;
             object-fit: cover;
             opacity: 0.45; 
-            /* Zoom in 15% and anchor to bottom-left to crop out the top-right NATO logo */
-            transform: scale(1.15);
+            /* Zoomed in 32% and anchored bottom-left to push the top-right logo completely off-screen */
+            transform: scale(1.32);
             transform-origin: bottom left;
         }
 
@@ -110,7 +110,9 @@
 
         .logo {
             height: 45px;
-            width: auto;
+            width: 45px;
+            border-radius: 50%; /* Circular */
+            object-fit: cover;
         }
 
         .brand-text {
@@ -176,10 +178,12 @@
         }
 
         .hero-logo {
-            width: 180px; /* Enlarged for the center layout */
-            height: auto;
+            width: 180px; 
+            height: 180px;
             margin-bottom: 30px;
             filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.5));
+            border-radius: 50%; /* Circular */
+            object-fit: cover;
         }
 
         #home h1 {
@@ -330,7 +334,8 @@
                 margin: 0 10px;
             }
             .hero-logo {
-                width: 130px; /* Scaled down slightly for mobile */
+                width: 130px; 
+                height: 130px;
             }
             #home h1 {
                 font-size: 2.5rem;
@@ -364,7 +369,7 @@
     <!-- Ticker Layer -->
     <div class="ticker-wrap">
         <div class="ticker">
-            // SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // REGULATORY COMPLIANCE FRAMEWORKS: EU DSA / UK ONLINE SAFETY ACT ACTIVE // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //
+            // SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // ADVERSARIAL BEHAVIORAL PATTERNS IDENTIFIED // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //
         </div>
     </div>
 
@@ -388,7 +393,7 @@
         <section id="home">
             <img src="image.png" alt="WNC Strategic Main Logo" class="hero-logo">
             <h1>WNC Strategic</h1>
-            <p>Advanced Open-Source Intelligence, Geopolitical Risk Analysis, and Regulatory Compliance Strategy.</p>
+            <p>Advanced Open-Source Intelligence, Geopolitical Risk Analysis, and Content & Behavioral Risk Mitigation.</p>
         </section>
 
         <!-- Offerings Section -->
@@ -406,10 +411,6 @@
                 <div class="card">
                     <h3>Content & Behavioral Risk</h3>
                     <p>Identifying and mitigating adversarial behavioral patterns and content-based threats across digital platforms and corporate infrastructure.</p>
-                </div>
-                <div class="card">
-                    <h3>Regulatory Compliance</h3>
-                    <p>Navigating global trust and safety frameworks, ensuring operational alignment with emerging digital regulations like the EU DSA and UK OSA.</p>
                 </div>
             </div>
         </section>
@@ -449,5 +450,37 @@
         </div>
     </footer>
 
+    <!-- Live OSINT Ticker Script -->
+    <script>
+        async function fetchLiveNews() {
+            const tickerElement = document.querySelector('.ticker');
+            
+            try {
+                // Fetch CISA Cyber Advisories
+                const rssUrl = 'https://www.cisa.gov/cybersecurity-advisories/all.xml';
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    // Grab top 5 headlines
+                    const headlines = data.items.slice(0, 5).map(item => `[${item.pubDate.split(' ')[0]}] ${item.title.toUpperCase()}`).join(' // ');
+                    
+                    // Inject into the ticker
+                    tickerElement.innerText = `// LIVE SITREP // ${headlines} // END OF LINE //`;
+                }
+            } catch (error) {
+                console.error("Comms link failed:", error);
+                tickerElement.innerText = "// SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // ADVERSARIAL BEHAVIORAL PATTERNS IDENTIFIED // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //";
+            }
+        }
+
+        // Run on page load
+        fetchLiveNews();
+        
+        // Refresh every 10 minutes
+        setInterval(fetchLiveNews, 600000);
+    </script>
 </body>
 </html>
