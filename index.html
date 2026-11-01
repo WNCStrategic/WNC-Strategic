@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WNC Strategic LLC</title>
-    <!-- Favicon link -->
-    <link rel="icon" type="image/png" href="image.png">
+    <!-- Favicon link (dynamically cropped to just the helmet via JS below) -->
+    <link id="dynamic-favicon" rel="icon" type="image/png" href="image.png">
     <style>
         /* Reset & Base Layout */
         * {
@@ -36,7 +36,7 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
-            pointer-events: none; /* Prevents mobile browsers from intercepting taps on the video */
+            pointer-events: none;
         }
         
         .bg-video {
@@ -44,7 +44,6 @@
             height: 100vh;
             object-fit: cover;
             opacity: 0.45; 
-            /* Zoomed in 32% and anchored bottom-left to push the top-right logo completely off-screen */
             transform: scale(1.32);
             transform-origin: bottom left;
             pointer-events: none;
@@ -123,7 +122,7 @@
         }
 
         .logo {
-            height: 55px; /* Enlarged header logo */
+            height: 55px;
             width: 55px;
             border-radius: 50%;
             object-fit: cover;
@@ -199,7 +198,7 @@
         }
 
         .hero-logo {
-            width: 240px; /* Enlarged main landing logo */
+            width: 240px; 
             height: 240px;
             margin-bottom: 30px;
             filter: drop-shadow(0px 4px 12px rgba(0,0,0,0.6));
@@ -270,7 +269,7 @@
             padding: 15px;
             color: #ffffff;
             font-family: inherit;
-            font-size: 1rem; /* Prevents iOS auto-zoom on input focus */
+            font-size: 1rem;
             border-radius: 4px;
             outline: none;
             transition: border-color 0.3s;
@@ -460,7 +459,7 @@
                     <p>Curated equipment recommendations, custom 3D-printed designs, and field-tested supplies engineered for operational readiness.</p>
                 </div>
                 <div class="card">
-                    <h3>Commendations & CustomPlaques</h3>
+                    <h3>Commendations & Custom Plaques</h3>
                     <p>Bespoke wall art plaques, unit emblems, and custom multi-color prints designed to exact specifications.</p>
                 </div>
             </div>
@@ -470,7 +469,6 @@
         <section id="newsletter">
             <h2 class="section-title">Daily SITREP</h2>
             <p style="margin-bottom: 25px; color: #94a3b8; max-width: 650px;">Read our automated intelligence summaries, deep-dive OSINT reports, and strategic geopolitical updates on Substack.</p>
-            <!-- Replace the href below with your actual Substack URL when ready -->
             <a href="https://substack.com" target="_blank" rel="noopener noreferrer" class="btn-link">Subscribe on Substack</a>
         </section>
 
@@ -493,16 +491,52 @@
             &copy; 2026 WNC Strategic LLC. All rights reserved.
         </div>
         <div class="social-links">
-            <!-- Replace "#" with your actual profile links -->
             <a href="#" target="_blank" rel="noopener noreferrer">X</a>
             <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
             <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
     </footer>
 
-    <!-- Mobile Video Autoplay Enforcer & Live OSINT Ticker Script -->
+    <!-- Scripts: Favicon Cropper, Mobile Video Autoplay & Live OSINT Ticker -->
     <script>
-        // Force mobile video playback
+        // 1. Auto-crop image.png to just the center helmet inside a circle for the Chrome tab
+        function setHelmetFavicon() {
+            const img = new Image();
+            img.src = 'image.png';
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = 64;
+                canvas.height = 64;
+                const ctx = canvas.getContext('2d');
+
+                // Circular mask
+                ctx.beginPath();
+                ctx.arc(32, 32, 32, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.clip();
+
+                // Zoom in on center 56% of the image (cropping out outer 22% on each side)
+                const cropStart = 0.22; 
+                const cropWidth = 0.56; 
+                
+                ctx.drawImage(
+                    img,
+                    img.width * cropStart,
+                    img.height * cropStart,
+                    img.width * cropWidth,
+                    img.height * cropWidth,
+                    0, 0, 64, 64
+                );
+
+                const favicon = document.getElementById('dynamic-favicon');
+                if (favicon) {
+                    favicon.href = canvas.toDataURL('image/png');
+                }
+            };
+        }
+        setHelmetFavicon();
+
+        // 2. Force mobile video playback
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.getElementById('bgVideo');
             if (video) {
@@ -511,24 +545,20 @@
                 video.playsInline = true;
                 
                 const attemptPlay = () => {
-                    video.play().catch(() => {
-                        // Fallback if mobile browser waits for first user touch
-                    });
+                    video.play().catch(() => {});
                 };
 
                 attemptPlay();
-                // Trigger playback immediately upon first scroll or tap on mobile
                 document.body.addEventListener('touchstart', attemptPlay, { once: true, passive: true });
                 document.body.addEventListener('scroll', attemptPlay, { once: true, passive: true });
             }
         });
 
-        // Live OSINT Ticker
+        // 3. Live OSINT Ticker
         async function fetchLiveNews() {
             const tickerElement = document.querySelector('.ticker');
             
             try {
-                // Fetch Defense One Global Threat & Geopolitics RSS Feed
                 const rssUrl = 'https://www.defenseone.com/rss/all/';
                 const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
                 
