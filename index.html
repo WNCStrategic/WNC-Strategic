@@ -15,44 +15,43 @@
             width: 100%;
             height: 100%;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0a0c10;
+            background-color: #0a0c10; /* Fallback background */
             color: #e2e8f0;
             overflow-x: hidden;
         }
 
-        /* Background Video & Visibility Tuning */
+        /* Background Video - FIXED Z-INDEX */
         .video-container {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: 0; /* Shifted to 0 so it sits above the body background */
             overflow: hidden;
         }
         .bg-video {
             width: 100vw;
             height: 100vh;
             object-fit: cover;
-            /* Increased visibility: higher opacity lets more of the video show through */
             opacity: 0.45; 
         }
 
-        /* Lighter Dark Overlay Mask to Keep Text Legible Without Hiding Video */
+        /* Lighter Dark Overlay Mask */
         .video-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 12, 16, 0.55); /* Lowered darkness from 0.8+ down to 0.55 */
-            z-index: -1;
+            background: rgba(10, 12, 16, 0.55);
+            z-index: 1; /* Shifted to 1 so it sits above the video */
         }
 
         /* Content Container */
         .content-wrapper {
             position: relative;
-            z-index: 1;
+            z-index: 2; /* Shifted to 2 so text stays on top of everything */
             display: flex;
             flex-direction: column;
             align-items: center;
