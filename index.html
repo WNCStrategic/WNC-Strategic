@@ -111,7 +111,7 @@
         .logo {
             height: 45px;
             width: 45px;
-            border-radius: 50%; /* Circular */
+            border-radius: 50%;
             object-fit: cover;
         }
 
@@ -182,7 +182,7 @@
             height: 180px;
             margin-bottom: 30px;
             filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.5));
-            border-radius: 50%; /* Circular */
+            border-radius: 50%;
             object-fit: cover;
         }
 
@@ -369,7 +369,7 @@
     <!-- Ticker Layer -->
     <div class="ticker-wrap">
         <div class="ticker">
-            // SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // ADVERSARIAL BEHAVIORAL PATTERNS IDENTIFIED // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //
+            // SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // GEOPOLITICAL RISK MONITORING ACTIVE // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //
         </div>
     </div>
 
@@ -393,7 +393,7 @@
         <section id="home">
             <img src="image.png" alt="WNC Strategic Main Logo" class="hero-logo">
             <h1>WNC Strategic</h1>
-            <p>Advanced Open-Source Intelligence, Geopolitical Risk Analysis, and Content & Behavioral Risk Mitigation.</p>
+            <p>Delivering actionable intelligence and geopolitical advisory to ensure operational resilience.</p>
         </section>
 
         <!-- Offerings Section -->
@@ -405,12 +405,12 @@
                     <p>Comprehensive data collection and analysis utilizing advanced methodologies to uncover actionable insights from publicly available information ecosystems.</p>
                 </div>
                 <div class="card">
-                    <h3>Geopolitical Risk Analysis</h3>
+                    <h3>Geopolitical Risk Advisory</h3>
                     <p>Strategic evaluation of global physical and political threats, allowing organizations to navigate complex international environments with confidence.</p>
                 </div>
                 <div class="card">
-                    <h3>Content & Behavioral Risk</h3>
-                    <p>Identifying and mitigating adversarial behavioral patterns and content-based threats across digital platforms and corporate infrastructure.</p>
+                    <h3>Operational Resilience & Threat Briefings</h3>
+                    <p>Tailored situational awareness reports and custom intelligence products designed to protect assets, personnel, and strategic operations.</p>
                 </div>
             </div>
         </section>
@@ -418,7 +418,7 @@
         <!-- Newsletter Section -->
         <section id="newsletter">
             <h2 class="section-title">Daily SITREP</h2>
-            <p style="margin-bottom: 20px; color: #94a3b8;">Subscribe to receive automated multi-agent intelligence summaries and strategic updates directly to your inbox.</p>
+            <p style="margin-bottom: 20px; color: #94a3b8;">Subscribe to receive automated intelligence summaries and strategic geopolitical updates directly to your inbox.</p>
             <form action="#" method="POST" class="newsletter-row">
                 <input type="email" placeholder="Enter your email address" required>
                 <button type="submit">Subscribe</button>
@@ -456,8 +456,8 @@
             const tickerElement = document.querySelector('.ticker');
             
             try {
-                // Fetch CISA Cyber Advisories
-                const rssUrl = 'https://www.cisa.gov/cybersecurity-advisories/all.xml';
+                // Fetch Defense One Global Threat & Geopolitics RSS Feed
+                const rssUrl = 'https://www.defenseone.com/rss/all/';
                 const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
                 
                 const response = await fetch(apiUrl);
@@ -472,7 +472,7 @@
                 }
             } catch (error) {
                 console.error("Comms link failed:", error);
-                tickerElement.innerText = "// SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // ADVERSARIAL BEHAVIORAL PATTERNS IDENTIFIED // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //";
+                tickerElement.innerText = "// SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // GEOPOLITICAL RISK MONITORING ACTIVE // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //";
             }
         }
 
