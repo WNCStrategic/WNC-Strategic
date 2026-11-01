@@ -36,6 +36,7 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
+            pointer-events: none; /* Prevents mobile browsers from intercepting taps on the video */
         }
         
         .bg-video {
@@ -46,6 +47,17 @@
             /* Zoomed in 32% and anchored bottom-left to push the top-right logo completely off-screen */
             transform: scale(1.32);
             transform-origin: bottom left;
+            pointer-events: none;
+        }
+
+        /* Hide native iOS Safari play button if Low Power Mode is active */
+        .bg-video::-webkit-media-controls,
+        .bg-video::-webkit-media-controls-start-playback-button,
+        .bg-video::-webkit-media-controls-panel,
+        .bg-video::-webkit-media-controls-play-button {
+            display: none !important;
+            -webkit-appearance: none !important;
+            opacity: 0 !important;
         }
 
         .video-overlay {
@@ -56,6 +68,7 @@
             height: 100%;
             background: rgba(10, 12, 16, 0.55);
             z-index: 1;
+            pointer-events: none;
         }
 
         /* Top OSINT News Ticker */
@@ -93,6 +106,7 @@
             width: 100%;
             background: rgba(10, 12, 16, 0.85);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 15;
             display: flex;
@@ -109,24 +123,31 @@
         }
 
         .logo {
-            height: 45px;
-            width: 45px;
+            height: 55px; /* Enlarged header logo */
+            width: 55px;
             border-radius: 50%;
             object-fit: cover;
         }
 
         .brand-text {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: #ffffff;
             letter-spacing: 1px;
             text-transform: uppercase;
         }
 
+        nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
         nav a {
             color: #94a3b8;
             text-decoration: none;
-            margin-left: 30px;
             font-size: 0.9rem;
             font-weight: 600;
             letter-spacing: 1px;
@@ -174,14 +195,14 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding-top: 80px;
+            padding-top: 110px;
         }
 
         .hero-logo {
-            width: 180px; 
-            height: 180px;
+            width: 240px; /* Enlarged main landing logo */
+            height: 240px;
             margin-bottom: 30px;
-            filter: drop-shadow(0px 4px 10px rgba(0,0,0,0.5));
+            filter: drop-shadow(0px 4px 12px rgba(0,0,0,0.6));
             border-radius: 50%;
             object-fit: cover;
         }
@@ -200,16 +221,17 @@
             max-width: 700px;
         }
 
-        /* Offerings Grid */
+        /* Offerings & Gear Grid */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
         }
 
         .card {
             background: rgba(20, 25, 35, 0.65);
             backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 40px;
             border-radius: 4px;
@@ -233,7 +255,7 @@
             font-size: 0.95rem;
         }
 
-        /* Forms (Newsletter & Contact) */
+        /* Buttons & Forms */
         .form-group {
             display: flex;
             flex-direction: column;
@@ -248,6 +270,7 @@
             padding: 15px;
             color: #ffffff;
             font-family: inherit;
+            font-size: 1rem; /* Prevents iOS auto-zoom on input focus */
             border-radius: 4px;
             outline: none;
             transition: border-color 0.3s;
@@ -262,36 +285,33 @@
             min-height: 150px;
         }
 
-        button {
+        button, .btn-link {
+            display: inline-block;
             background: #ffffff;
             color: #0a0c10;
             border: none;
             padding: 15px 30px;
             font-weight: 700;
+            font-size: 0.95rem;
             text-transform: uppercase;
+            text-decoration: none;
+            text-align: center;
             letter-spacing: 1px;
             cursor: pointer;
             border-radius: 4px;
             transition: background 0.3s ease;
-            max-width: 200px;
+            max-width: 280px;
         }
 
-        button:hover {
+        button:hover, .btn-link:hover {
             background: #4ade80;
-        }
-
-        .newsletter-row {
-            display: flex;
-            gap: 10px;
-            max-width: 600px;
-        }
-        
-        .newsletter-row input {
-            flex-grow: 1;
+            color: #0a0c10;
         }
 
         /* Footer & Socials */
         footer {
+            position: relative;
+            z-index: 2;
             width: 100%;
             background: rgba(5, 7, 10, 0.9);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -304,10 +324,14 @@
             gap: 20px;
         }
 
+        .social-links {
+            display: flex;
+            gap: 25px;
+        }
+
         .social-links a {
             color: #94a3b8;
             text-decoration: none;
-            margin-left: 20px;
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -323,35 +347,48 @@
             font-size: 0.85rem;
         }
 
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
+        /* Tablet & Mobile Responsiveness */
+        @media (max-width: 900px) {
             header {
                 flex-direction: column;
+                gap: 12px;
+                padding: 12px 5%;
+            }
+            nav {
                 gap: 15px;
-                padding: 15px 0;
             }
             nav a {
-                margin: 0 10px;
+                font-size: 0.8rem;
+            }
+            #home {
+                padding-top: 150px;
             }
             .hero-logo {
-                width: 130px; 
-                height: 130px;
+                width: 170px; 
+                height: 170px;
             }
             #home h1 {
-                font-size: 2.5rem;
+                font-size: 2.3rem;
             }
-            .newsletter-row {
-                flex-direction: column;
+            #home p {
+                font-size: 1.05rem;
             }
-            .newsletter-row button {
+            section {
+                padding: 100px 20px 40px 20px;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .btn-link, button {
                 max-width: 100%;
+                width: 100%;
             }
             footer {
                 flex-direction: column;
                 text-align: center;
             }
-            .social-links a {
-                margin: 0 10px;
+            .social-links {
+                justify-content: center;
             }
         }
     </style>
@@ -360,9 +397,7 @@
 
     <!-- Background Video & Overlay Layer -->
     <div class="video-container">
-        <video autoplay muted loop playsinline class="bg-video">
-            <source src="background.mp4" type="video/mp4">
-        </video>
+        <video id="bgVideo" src="background.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" disablePictureInPicture class="bg-video"></video>
     </div>
     <div class="video-overlay"></div>
 
@@ -381,6 +416,7 @@
         </a>
         <nav>
             <a href="#offerings">Offerings</a>
+            <a href="#gear">Gear & Supplies</a>
             <a href="#newsletter">Newsletter</a>
             <a href="#contact">Contact</a>
         </nav>
@@ -415,14 +451,27 @@
             </div>
         </section>
 
-        <!-- Newsletter Section -->
+        <!-- Gear & Supplies Section -->
+        <section id="gear">
+            <h2 class="section-title">Gear & Supplies</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <h3>Field & Tactical Equipment</h3>
+                    <p>Curated equipment recommendations, custom 3D-printed designs, and field-tested supplies engineered for operational readiness.</p>
+                </div>
+                <div class="card">
+                    <h3>Commendations & CustomPlaques</h3>
+                    <p>Bespoke wall art plaques, unit emblems, and custom multi-color prints designed to exact specifications.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section (Substack Link) -->
         <section id="newsletter">
             <h2 class="section-title">Daily SITREP</h2>
-            <p style="margin-bottom: 20px; color: #94a3b8;">Subscribe to receive automated intelligence summaries and strategic geopolitical updates directly to your inbox.</p>
-            <form action="#" method="POST" class="newsletter-row">
-                <input type="email" placeholder="Enter your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
+            <p style="margin-bottom: 25px; color: #94a3b8; max-width: 650px;">Read our automated intelligence summaries, deep-dive OSINT reports, and strategic geopolitical updates on Substack.</p>
+            <!-- Replace the href below with your actual Substack URL when ready -->
+            <a href="https://substack.com" target="_blank" rel="noopener noreferrer" class="btn-link">Subscribe on Substack</a>
         </section>
 
         <!-- Contact Section -->
@@ -444,14 +493,37 @@
             &copy; 2026 WNC Strategic LLC. All rights reserved.
         </div>
         <div class="social-links">
-            <a href="#">LinkedIn</a>
-            <a href="#">GitHub</a>
-            <a href="#">X / Twitter</a>
+            <!-- Replace "#" with your actual profile links -->
+            <a href="#" target="_blank" rel="noopener noreferrer">X</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
         </div>
     </footer>
 
-    <!-- Live OSINT Ticker Script -->
+    <!-- Mobile Video Autoplay Enforcer & Live OSINT Ticker Script -->
     <script>
+        // Force mobile video playback
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('bgVideo');
+            if (video) {
+                video.muted = true;
+                video.defaultMuted = true;
+                video.playsInline = true;
+                
+                const attemptPlay = () => {
+                    video.play().catch(() => {
+                        // Fallback if mobile browser waits for first user touch
+                    });
+                };
+
+                attemptPlay();
+                // Trigger playback immediately upon first scroll or tap on mobile
+                document.body.addEventListener('touchstart', attemptPlay, { once: true, passive: true });
+                document.body.addEventListener('scroll', attemptPlay, { once: true, passive: true });
+            }
+        });
+
+        // Live OSINT Ticker
         async function fetchLiveNews() {
             const tickerElement = document.querySelector('.ticker');
             
@@ -464,10 +536,7 @@
                 const data = await response.json();
                 
                 if (data.status === 'ok') {
-                    // Grab top 5 headlines
                     const headlines = data.items.slice(0, 5).map(item => `[${item.pubDate.split(' ')[0]}] ${item.title.toUpperCase()}`).join(' // ');
-                    
-                    // Inject into the ticker
                     tickerElement.innerText = `// LIVE SITREP // ${headlines} // END OF LINE //`;
                 }
             } catch (error) {
@@ -476,10 +545,7 @@
             }
         }
 
-        // Run on page load
         fetchLiveNews();
-        
-        // Refresh every 10 minutes
         setInterval(fetchLiveNews, 600000);
     </script>
 </body>
