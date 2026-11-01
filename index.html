@@ -87,7 +87,7 @@
         /* Navigation Header */
         header {
             position: fixed;
-            top: 34px; /* Sits just below the ticker */
+            top: 34px; 
             width: 100%;
             background: rgba(10, 12, 16, 0.85);
             backdrop-filter: blur(10px);
@@ -308,3 +308,133 @@
         .footer-text {
             color: #64748b;
             font-size: 0.85rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 0;
+            }
+            nav a {
+                margin: 0 10px;
+            }
+            #home h1 {
+                font-size: 2.5rem;
+            }
+            .newsletter-row {
+                flex-direction: column;
+            }
+            .newsletter-row button {
+                max-width: 100%;
+            }
+            footer {
+                flex-direction: column;
+                text-align: center;
+            }
+            .social-links a {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Video & Overlay Layer -->
+    <div class="video-container">
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="background.mp4" type="video/mp4">
+        </video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <!-- Ticker Layer -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            // SITREP 0400Z: GLOBAL THREAT VECTORS UPDATED // REGULATORY COMPLIANCE FRAMEWORKS: EU DSA / UK ONLINE SAFETY ACT ACTIVE // OSINT DATA PIPELINES OPERATIONAL // END OF LINE //
+        </div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+        <a href="#home" class="brand-container">
+            <img src="image.png" alt="WNC Strategic LLC Logo" class="logo">
+            <span class="brand-text">WNC Strategic</span>
+        </a>
+        <nav>
+            <a href="#offerings">Offerings</a>
+            <a href="#newsletter">Newsletter</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main Scrolling Content -->
+    <div class="content-wrapper">
+        
+        <!-- Hero Section -->
+        <section id="home">
+            <h1>War Never Changes</h1>
+            <p>Advanced Open-Source Intelligence, Geopolitical Risk Analysis, and Regulatory Compliance Strategy.</p>
+        </section>
+
+        <!-- Offerings Section -->
+        <section id="offerings">
+            <h2 class="section-title">Strategic Offerings</h2>
+            <div class="grid-container">
+                <div class="card">
+                    <h3>Open-Source Intelligence (OSINT)</h3>
+                    <p>Comprehensive data collection and analysis utilizing advanced methodologies to uncover actionable insights from publicly available information ecosystems.</p>
+                </div>
+                <div class="card">
+                    <h3>Geopolitical Risk Analysis</h3>
+                    <p>Strategic evaluation of global physical and political threats, allowing organizations to navigate complex international environments with confidence.</p>
+                </div>
+                <div class="card">
+                    <h3>Content & Behavioral Risk</h3>
+                    <p>Identifying and mitigating adversarial behavioral patterns and content-based threats across digital platforms and corporate infrastructure.</p>
+                </div>
+                <div class="card">
+                    <h3>Regulatory Compliance</h3>
+                    <p>Navigating global trust and safety frameworks, ensuring operational alignment with emerging digital regulations like the EU DSA and UK OSA.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter">
+            <h2 class="section-title">Daily SITREP</h2>
+            <p style="margin-bottom: 20px; color: #94a3b8;">Subscribe to receive automated multi-agent intelligence summaries and strategic updates directly to your inbox.</p>
+            <form action="#" method="POST" class="newsletter-row">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2 class="section-title">Secure Comms</h2>
+            <form action="#" method="POST" class="form-group">
+                <input type="text" placeholder="Name or Organization" required>
+                <input type="email" placeholder="Email Address" required>
+                <textarea placeholder="Message / Inquiry Details" required></textarea>
+                <button type="submit">Transmit</button>
+            </form>
+        </section>
+
+    </div>
+
+    <!-- Footer & Socials -->
+    <footer>
+        <div class="footer-text">
+            &copy; 2026 WNC Strategic LLC. All rights reserved.
+        </div>
+        <div class="social-links">
+            <a href="#">LinkedIn</a>
+            <a href="#">GitHub</a>
+            <a href="#">X / Twitter</a>
+        </div>
+    </footer>
+
+</body>
+</html>
